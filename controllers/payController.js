@@ -33,8 +33,8 @@ module.exports = {
       ],
       back_urls:{
         failure: "https://www.w3schools.com/",
-        pending: "https://clob-client.herokuapp.com",
-        success: "https://clob-client.herokuapp.com"
+        pending: "https://clob-tienda.herokuapp.com/",
+        success: "https://clob-tienda.herokuapp.com/"
       },
       statement_descriptor: "Clob Prendas"
     }
