@@ -29,5 +29,7 @@ router.post('/delete-category', productController.deleteCategory);
 router.get('/category', productController.listCategory);
 router.get('/product/:id', productController.onlyProduct);
 router.get('/search', productController.search);
+router.post('/demo-form', upload.array('fieldname', 5), productController.demo);
+router.post('/detail-category', productController.detail);
 
 module.exports = router;

@@ -16,13 +16,16 @@
         description: {
             type: dataTypes.STRING
         },
-        collection:{
+        collection: {
             type: dataTypes.STRING
         },
-        discount:{
+        discount: {
             type: dataTypes.STRING
         },
         id_category: {
+            type: dataTypes.INTEGER
+        },
+        show: {
             type: dataTypes.INTEGER
         }
     }

@@ -10,10 +10,16 @@ module.exports = function(sequelize, dataTypes){
         title: {
             type: dataTypes.STRING
         },
+        description: {
+            type: dataTypes.STRING
+        },
         img_path:{
             type: dataTypes.STRING
         },
-        show:{
+        banner:{
+            type: dataTypes.INTEGER
+        },
+        header:{
             type: dataTypes.INTEGER
         }
     }

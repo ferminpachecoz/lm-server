@@ -13,7 +13,7 @@ const productController={
           z.push({path: item.originalname, id_product: y.id})
         });
         db.Image.bulkCreate(z)
-          .then(res.status(200).json(data))
+          .then(res.status(200).json({data: data, status: 'success'}))
       })
   },
   list: (req,res)=>{
@@ -57,17 +57,22 @@ const productController={
   createCategory: (req, res)=>{
     db.Category.create({
       title: req.body.title,
-      img_path: req.file.originalname
+      description: req.body.description,
+      img_path: req.file.originalname,
+      banner: req.body.banner,
+      header: req.body.header
     })
-      .then(data => res.status(200).json(data))
+      .then(data => res.status(200).json({data: data, status: 1}))
   },
   updateCategory: (req, res)=>{
-    if(req.file.originalname){
-      db.Category.update({title: req.body.title, img_path: req.file.originalname}, {where:{id: req.body.id}})
-        .then(data => res.status(200).json(data))
+    console.log(req.body)
+    if(req.file){
+      db.Category.update({...req.body, img_path: req.file.originalname}, {where:{id: req.body.id}})
+        .then(data => res.status(200).json({data: data, status: 1}))
+      console.log(req.body);
     }else{
-      db.Category.update({title: req.body.title}, {where:{id: req.body.id}})
-        .then(data => res.status(200).json(data))
+      db.Category.update({...req.body}, {where:{id: req.body.id}})
+        .then(data => res.status(200).json({data: data, status: 1}))
     }
   },
   deleteCategory: (req, res)=>{
@@ -93,6 +98,14 @@ const productController={
     const [results, metadata] = await sequelize.query("SELECT * FROM products WHERE name LIKE '%"+str+"%'")
 
     await res.status(200).json(results);
+  },
+  demo: (req, res)=>{
+    console.log(req.files);
+  },
+  detail: (req,res)=>{
+    console.log(req.body)
+    db.Category.update({...req.body}, {where: {id: req.body.id}})
+      .then(data => res.status(200).json({data, status: 1}))
   }
 }
 module.exports = productController;

@@ -4,39 +4,31 @@ module.exports = {
   create: async(req,res)=>{
     const url = "https://api.mercadopago.com/checkout/preferences";
     let info = req.body;
-    let finalPrice = req.body.price;
+    /* let finalPrice = req.body.price;
     if(req.body.discount){
       finalPrice = req.body.price * (100-req.body.discount);
-    }
+    } */
+    let arr = [];
+    info.forEach(item=>{
+      let obj = {
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        quantity: item.units,
+        picture_url: `../client/public/${info.path}`,
+        currency_id: "ARS",
+        unit_price: item.price,
+      }
+      arr.push(obj)
+    })
     const body = {
-      payer_email: info.email,
-      items:[
-        {
-          title: info.name,
-          description: info.description,
-          category_id: info.category.title,
-          quantity: 1,
-          picture_url: "https://static.zara.net/photos///2021/I/0/1/p/6045/211/401/2/w/373/6045211401_1_1_1.jpg?ts=1634559831928",
-          currency_id: "ARS",
-          unit_price: finalPrice,
-          payer: {
-            name: info.first_name,
-            surname: info.lastname,
-            email: info.email,
-            address: {
-              zip_code: info.zip_code,
-              street_name: info.street_name,
-              street_number: info.street_number
-            }
-          }
-        }
-      ],
+      items: [...arr],
       back_urls:{
         failure: "https://www.w3schools.com/",
         pending: "https://clob-tienda.herokuapp.com/",
         success: "https://clob-tienda.herokuapp.com/"
       },
-      statement_descriptor: "Clob Prendas"
+      statement_descriptor: "Le Marchê"
     }
     const payment = await axios.post(url, body, {
       headers:{
